@@ -1,0 +1,21 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page import="java.util.Date" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>import 속성</title>
+</head>
+<body>
+<%
+Date  today = new Date();
+SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+String today2 = dateFormat.format(today);
+out.println("오늘날짜 : "+ today);
+out.println("오늘날짜 : "+ today2);
+%>
+
+</body>
+</html>
