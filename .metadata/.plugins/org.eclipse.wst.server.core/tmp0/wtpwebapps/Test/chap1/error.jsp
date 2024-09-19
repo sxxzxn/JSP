@@ -13,8 +13,24 @@ page 지시어 = errorPage, isErrorPage 속성
 </h2>
 
 <% 
-int age= Integer.parseInt(request.getParameter("age"));
-out.print("현재나이는 "+ age +"입니다.");
+try{
+	int age= Integer.parseInt(request.getParameter("age"));
+	out.print("현재나이는 "+ age +"입니다.");
+} catch(Exception e){
+	e.getStackTrace();
+	out.print(e.getMessage()+"<br>"+e.getClass().getName());
+// 	로그남기기
+}
+
+
+try{
+	int age= Integer.parseInt(request.getParameter("age"));
+	out.print("현재나이는 "+ age +"입니다.");
+} catch(Exception e){
+	e.getStackTrace();
+	out.print(e.getMessage()+"<br>"+e.getClass().getName());
+// 	로그남기기
+}
 %>
 
 </body>
