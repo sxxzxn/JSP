@@ -9,13 +9,13 @@ LocalDate today = LocalDate.now();
 LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
 
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<!-- <!DOCTYPE html> -->
+<!-- <html> -->
+<!-- <head> -->
+<!-- <meta charset="UTF-8"> -->
+<!-- <title>Insert title here</title> -->
+<!-- </head> -->
+<!-- <body> -->
 
-</body>
-</html>
+<!-- </body> -->
+<!-- </html> -->
