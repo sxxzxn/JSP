@@ -13,4 +13,8 @@
   <param-name>INIT_PARAM</param-name>
   <param-value>초기화 변수 값</param-value>
   </context-param>
+  <error-page>
+  <error-code>404</error-code>
+  <location>/chap2/ex.jsp</location>
+  </error-page>
 </web-app>
