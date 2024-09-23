@@ -18,6 +18,7 @@
 // 			case "long":
 // 				break;
 // 			default:
+// 				return (param != null ? true : false);
 // 			}
 // 		}
 	}%>
