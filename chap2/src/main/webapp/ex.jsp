@@ -10,11 +10,10 @@
 
 <%
 int sts = response.getStatus();
-if (sts == 400){
+if (sts == 404){
 	out.print("404에러 발생");
 	out.print("<br> 경로를 확인해주세요");
 }
-
 
 
 %>
