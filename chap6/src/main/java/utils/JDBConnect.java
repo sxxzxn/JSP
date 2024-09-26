@@ -1,4 +1,4 @@
-package common;
+package utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -44,9 +44,6 @@ public class JDBConnect {
 			
 		}
 	}
-	
-	
-	
 		//두번째 생성자
 		public JDBConnect(String driver, String url, String id, String pwd) {
 			
