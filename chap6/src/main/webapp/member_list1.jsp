@@ -1,3 +1,6 @@
+<%@page import="fullstack7.member.MemberDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="fullstack7.member.MemberDAO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -22,20 +25,16 @@ table,thead,tbody,th,tr,td {
 
 <h2> 회원 목록 조회(statement)</h2>
 
-<% 
- JDBConnect jdbc = new JDBConnect();
- String sql = "SELECT memberID, name, pwd, regDate FROM tbl_member";
- Statement stmt = jdbc.con.createStatement();
- ResultSet rs = stmt.executeQuery(sql);
-
-%>
 <%
-String dbDriver = application.getInitParameter("MariaDriver");
-String dbUrl = application.getInitParameter("MariaURL");
-String dbId = application.getInitParameter("dbId");
-String dbPwd = application.getInitParameter("dbPwd");
+// String dbDriver = application.getInitParameter("MariaDriver");
+// String dbUrl = application.getInitParameter("MariaURL");
+// String dbId = application.getInitParameter("dbId");
+// String dbPwd = application.getInitParameter("dbPwd");
 
+MemberDAO dao = new MemberDAO();
+List<MemberDTO> mList = dao.getMemberList();
 
+if(mList != null && !  mList.isEmpty()){
 %>
 
 
@@ -46,7 +45,6 @@ String dbPwd = application.getInitParameter("dbPwd");
 			<th>아이디</th>
 			<th>이름</th>
 			<th>비밀번호</th>
-			<th>등록일</th>
 			<th>삭제</th>
 		
 		</tr>
@@ -54,19 +52,17 @@ String dbPwd = application.getInitParameter("dbPwd");
 	<tbody>
 		
 	<%
-	while(rs.next()){
+	for (MemberDTO member : mList){
 	%>
 	<tr>
-			<td><input type="checkbox" name="checkBox"  value="<%=rs.getString(1) %>" /></td>
-			<td><a href="./member_view.jsp?memberId=<%=rs.getString(1) %>"><%=rs.getString(1) %></a></td>
-			<td><%=rs.getString(2) %></td>
-			<td><%=rs.getString(3) %></td>
-			<td><%=rs.getDate(4) %></td>
-			<td><a href="./member_delete_ok.jsp?memberId=<%=rs.getString(1) %>">삭제</a></td>
+			<td><input type="checkbox" name="checkBox"  value="<%=member.getMemberId() %>" /></td>
+			<td><a href="./member_view.jsp?memberId=<%=member.getMemberId() %>"><%=member.getMemberId() %></a></td>
+			<td><%=member.getName() %></td>
+			<td><%=member.getPwd() %></td>
+			<td><a href="./member_delete_ok.jsp?memberId=<%=member.getMemberId()%>">삭제</a></td>
 		</tr>
 	<% 
 	}
-	jdbc.close();
 	%>	
 		<tr>
 			<td colspan="6" class="centext"><1 2 3></td>
@@ -79,6 +75,13 @@ String dbPwd = application.getInitParameter("dbPwd");
 		</tr>
 	</tbody>
 </table>
+<%
+}else{
+%>
+회원이 없습니다.
+<%
+}
+%>
 <script>
 //등록페이지
 const btnRegist = document.getElementById("btnRegist");

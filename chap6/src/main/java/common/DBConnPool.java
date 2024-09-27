@@ -1,4 +1,4 @@
-package utils;
+package common;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +14,7 @@ public class DBConnPool {
 	public Statement stmt;
 	public PreparedStatement pstm;
 	public ResultSet rs;
+	
 	
 	public DBConnPool() {
 		
@@ -33,14 +34,30 @@ public class DBConnPool {
 			System.out.println(" DB 커넥션 풀 접속 에러 ");
 			System.out.println("에러메세지 : "+e.getMessage());
 			System.out.println("==================================================");
-			
 		}
 		
-		
-		
-		
 	}
-	
+//	public DBConnPool(String golbalName) {
+//		
+//		try {
+//			Context initCtx = new InitialContext();
+//			Context ctx = (Context) initCtx.lookup("java:comp/env");
+//			DataSource ds = (DataSource) ctx.lookup("golbalName");
+//			con = ds.getConnection();
+//			System.out.println("==================================================");
+//			System.out.println(" DB 커넥션 풀 생성 ");
+//			System.out.println("con1 String : " + con);
+//			System.out.println("==================================================");
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("==================================================");
+//			System.out.println(" DB 커넥션 풀 접속 에러 ");
+//			System.out.println("에러메세지 : "+e.getMessage());
+//			System.out.println("==================================================");
+//		}
+//		
+//	}
 	
 	
 	

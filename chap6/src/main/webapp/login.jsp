@@ -1,9 +1,9 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="utils.JDBConnect"%>
+<%@page import="common.JDBConnect"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
-<%@page import="utils.CommonUtils"%>
+<%@page import="common.CommonUtils"%>
 <%
 // public String getCookiesInfo(HttpServletRequest req, String cName){
 // 	Cookie[] cookies = req.getCookies();	// 요청 헤더에 있는 모든 쿠키 조회
