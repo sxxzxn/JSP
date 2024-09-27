@@ -21,30 +21,30 @@ table, thead, tbody, th, tr, td {
 <body>
 <h2> 회원 수정</h2>
 <%
-String memberId = request.getParameter("memberId");
-String name = "";
-String pwd = "";
+	String memberId = request.getParameter("memberId");
 
 
+	MemberDAO dao = new MemberDAO();
+	MemberDTO dto = dao.getMemberInfo(memberId);
 
-MemberDAO dao = new MemberDAO();
-MemberDTO dto = dao.getMemberInfo(memberId);
-// if (memberId != null && !memberId.isEmpty()) {
-%>
+	if (memberId != null && !memberId.isEmpty()) {
+		
+	
+	%>
 <form id="frmModify" action="member_modify_ok.jsp" method="POST">
 <table>
 	<tbody>
 	<tr>
 		<td class="input_title">아이디</td>
-		<td><input type="text" name="memberId" value="<%=memberId%>" readonly maxlength="20"/></td>
+		<td><input type="text" name="memberId" value="<%=dto.getMemberId()%>" readonly maxlength="20"/></td>
 	</tr>
 	<tr>
 		<td class="input_title">이름</td>
-		<td><input type="text" name="name" value="<%=name%>" maxlength="20"/></td>
+		<td><input type="text" name="name" value="<%=dto.getName()%>" maxlength="20"/></td>
 	</tr>
 	<tr>
 		<td class="input_title">비밀번호</td>
-		<td><input type="password" name="pwd" value="<%=pwd%>" maxlength="20"/></td>
+		<td><input type="password" name="pwd" value="<%=dto.getPwd()%>" maxlength="20"/></td>
 	</tr>
 	<tr>
 		<td colspan="5" class="center"></td>
@@ -59,7 +59,9 @@ MemberDTO dto = dao.getMemberInfo(memberId);
 </table>
 </form>
 
-
+<%
+	}
+%>
 
 <script>
 const btnModify = document.getElementById("btnModify");

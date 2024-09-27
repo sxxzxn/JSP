@@ -24,8 +24,6 @@ table, thead, tbody, th, tr, td {
 	<h2>회원 상세 정보</h2>
 	<%
 	String memberId = request.getParameter("memberId");
-	String name = "";
-	String pwd = "";
 
 
 	MemberDAO dao = new MemberDAO();
@@ -41,15 +39,15 @@ table, thead, tbody, th, tr, td {
 			<tbody>
 				<tr>
 					<td class="input_title">아이디</td>
-					<td><%=memberId%></td>
+					<td><%=dto.getMemberId()%></td>
 				</tr>
 				<tr>
 					<td class="input_title">이름</td>
-					<td><%=name%></td>
+					<td><%=dto.getName()%></td>
 				</tr>
 				<tr>
 					<td class="input_title">비밀번호</td>
-					<td><%=pwd%></td>
+					<td><%=dto.getPwd()%></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="center">
