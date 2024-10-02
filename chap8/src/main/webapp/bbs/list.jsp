@@ -15,6 +15,11 @@
 table, thead, tbody, tr, td {
 	border: 1px solid black;
 }
+
+    a:link, a:visited, a:hover, a:active {
+        color: black;
+        text-decoration: none; /* 밑줄 제거 (원하는 경우) */
+    }
 </style>
 </head>
 <body>
@@ -159,10 +164,18 @@ table, thead, tbody, tr, td {
                         if (searchType == null) searchType = "";
                         if (searchKeyword == null) searchKeyword = "";
 
-                        // 이전 페이지 링크
+                        // << 링크 (첫 페이지일 때는 클릭 불가 처리)
                         if (pageNo > 1) {
                             out.print("<a href='list.jsp?pageNo=1&pageSize=" + pageSize + "&searchType=" + searchType + "&searchKeyword=" + searchKeyword + "'>&lt;&lt;</a> ");
-                            out.print("<a href='list.jsp?pageNo=" + (pageNo - 1) + "&pageSize=" + pageSize + "&searchType=" + searchType + "&searchKeyword=" + searchKeyword + "'>&lt;</a> ");
+                        } else {
+                            out.print("&lt;&lt; ");
+                        }
+
+                        // < 이전 블록 링크 (첫 번째 블록일 때는 클릭 불가 처리)
+                        if (startPage > 1) {
+                            out.print("<a href='list.jsp?pageNo=" + (startPage - 1) + "&pageSize=" + pageSize + "&searchType=" + searchType + "&searchKeyword=" + searchKeyword + "'>&lt;</a> ");
+                        } else {
+                            out.print("&lt; ");
                         }
 
                         // 페이지 번호 링크
@@ -174,10 +187,18 @@ table, thead, tbody, tr, td {
                             }
                         }
 
-                        // 다음 페이지 링크
+                        // > 다음 블록 링크 (마지막 블록일 때는 클릭 불가 처리)
+                        if (endPage < totalPages) {
+                            out.print("<a href='list.jsp?pageNo=" + (endPage + 1) + "&pageSize=" + pageSize + "&searchType=" + searchType + "&searchKeyword=" + searchKeyword + "'>&gt;</a> ");
+                        } else {
+                            out.print("&gt; ");
+                        }
+
+                        // >> 링크 (마지막 페이지일 때는 클릭 불가 처리)
                         if (pageNo < totalPages) {
-                            out.print("<a href='list.jsp?pageNo=" + (pageNo + 1) + "&pageSize=" + pageSize + "&searchType=" + searchType + "&searchKeyword=" + searchKeyword + "'>&gt;</a> ");
                             out.print("<a href='list.jsp?pageNo=" + totalPages + "&pageSize=" + pageSize + "&searchType=" + searchType + "&searchKeyword=" + searchKeyword + "'>&gt;&gt;</a>");
+                        } else {
+                            out.print("&gt;&gt;");
                         }
                     }
                     System.out.println("pageNo: " + pageNo);

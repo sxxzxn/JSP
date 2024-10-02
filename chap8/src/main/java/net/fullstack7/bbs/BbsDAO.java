@@ -173,9 +173,9 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	
     if (searchType != null && !searchType.isEmpty() && searchKeyword != null && !searchKeyword.isEmpty()) {
         if ("title".equals(searchType)) {
-            sql = "SELECT * FROM tbl_bbs WHERE title LIKE ? LIMIT ? OFFSET ?";
+            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE title LIKE ? LIMIT ? OFFSET ?";
         } else if ("memberId".equals(searchType)) {
-            sql = "SELECT * FROM tbl_bbs WHERE memberId LIKE ? LIMIT ? OFFSET ?";
+            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE memberId LIKE ? LIMIT ? OFFSET ?";
         }
     } else {
         sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs LIMIT ? OFFSET ?";
@@ -222,9 +222,9 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 		String sql="";
 
         if (searchType != null && !searchType.isEmpty() && searchKeyword != null && !searchKeyword.isEmpty()) {
-            sql = "SELECT COUNT(*) FROM tbl_bbs WHERE " + searchType + " LIKE ?";
+            sql = "SELECT COUNT(idx) FROM tbl_bbs WHERE " + searchType + " LIKE ?";
         } else {
-            sql = "SELECT COUNT(*) FROM tbl_bbs";
+            sql = "SELECT COUNT(idx) FROM tbl_bbs";
         }
 		try {
 			pstm = con.prepareStatement(sql);

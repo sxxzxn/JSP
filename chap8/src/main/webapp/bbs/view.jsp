@@ -72,7 +72,14 @@ String role = (String) session.getAttribute("role");
             <textarea name="content" rows="10" readonly><%= dto.getContent() %></textarea>
         </div>
         <div>
-        <input type="button" id ="btnModify" value="수정" />
+      <%
+     if(memberId != null &&  memberId.equals(dto.getMemberId())){
+     %> 
+        <input type="button" id ="btnModify" value="수정" />        
+    <%
+     }
+     %>
+
      <%
      if(memberId != null &&  memberId.equals(dto.getMemberId())){
      %> 
