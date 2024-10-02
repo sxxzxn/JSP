@@ -24,10 +24,10 @@
 		&& memberId != null && ! memberId.isEmpty() 
 		&& content != null&& ! content.isEmpty()) {
 		
-		BbsDTO bbs = new BbsDTO(title, content, memberId);
+		BbsDTO dto = new BbsDTO(title, content, memberId);
 
 		BbsDAO dao = new BbsDAO();
-		int result = dao.setBbsRegist(bbs);
+		int result = dao.setBbsRegist(dto);
 
 		if (result > 0) {
 			out.print("<script>alert('등록성공'); location.href='list.jsp';</script>");

@@ -49,7 +49,8 @@ int idx = Integer.parseInt(request.getParameter("idx"));
 
 BbsDAO dao = new BbsDAO();
 BbsDTO dto = dao.getBbsNo(idx);
-
+String memberId = (String) session.getAttribute("memberId");
+String role = (String) session.getAttribute("role");
 %>
 <h2>게시글 조회</h2>
 <div class="bbsdiv">
@@ -72,7 +73,14 @@ BbsDTO dto = dao.getBbsNo(idx);
         </div>
         <div>
         <input type="button" id ="btnModify" value="수정" />
+     <%
+     if(memberId != null &&  memberId.equals(dto.getMemberId())){
+     %> 
         <input type="button" id ="btndelete" value="삭제" />
+     <%
+     }
+     %>
+     
         <input type="button" id ="btnBack" value="이전" />
         </div>
     </form>

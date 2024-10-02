@@ -42,7 +42,15 @@
 <body>
 <%
 %>
-
+<%
+    // 로그인한 사용자의 아이디를 세션에서 가져옴
+    String memberId = (String) session.getAttribute("memberId");
+    if (memberId == null) {
+        // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+        response.sendRedirect("login2.jsp");
+        return;
+    }
+%>
 <h2>게시판 등록</h2>
 <div class="bbsdiv">
     <form id="frm">
@@ -53,7 +61,17 @@
             </div>
             <div>
                 <label class="label">글쓴이:</label>
-                <input type="text" id="memberId" name="memberId">
+                <%
+                    if (memberId != null) {
+                %>
+                    <input type="text" id="memberId" name="memberId" value="<%= memberId %>" readonly>
+                <%
+                    } else {
+                %>
+                    <input type="text" id="memberId" name="memberId" placeholder="이름을 입력하세요">
+                <%
+                    }
+                %>
             </div>
         </div>
         <div class="content-row">

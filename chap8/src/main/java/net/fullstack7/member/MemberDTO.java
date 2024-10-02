@@ -17,7 +17,7 @@ public class MemberDTO {
 	private LocalDateTime leaveDate;
 	private LocalDateTime pwdChangeDate;
 	private String	saveIdFlag;
-	
+	private String role;
 	
 	
 	public String getMemberId() {
@@ -103,6 +103,12 @@ public class MemberDTO {
 	}
 	public void setSaveIdFlag(String saveIdFlag) {
 		this.saveIdFlag = saveIdFlag;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 }

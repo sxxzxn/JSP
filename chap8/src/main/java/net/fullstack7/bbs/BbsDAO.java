@@ -5,40 +5,40 @@ import java.util.List;
 
 public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	
-	//전체 게시글 조회
-	public List<BbsDTO> getBbsList(){
-		String sql = "SELECT idx, title, memberId, readCnt, regDate FROM tbl_bbs";
-		List<BbsDTO> listDto = new ArrayList<BbsDTO>();
-		
-		try {
-			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
-			
-			while(rs.next()) {
-				BbsDTO dto = new BbsDTO();
-				
-				dto.setIdx(rs.getInt("idx"));
-				dto.setTitle(rs.getString("title"));
-				dto.setMemberId(rs.getString("memberId"));
-				dto.setReadCnt(rs.getInt("readCnt"));
-//				dto.setRegDate(timestamp.toLocalDateTime());
-				
-				listDto.add(dto);
-				
-			}
-		}catch(Exception e) {
-			System.out.println("==================================================");
-			System.out.println("게시글리스트 조회 실패");
-			System.out.println(e.getMessage());
-			System.out.println("==================================================");
-			
-		}finally {
-			
-			close();
-		}
-		
-		return listDto;
-	}
+//	//전체 게시글 조회
+//	public List<BbsDTO> getBbsList(){
+//		String sql = "SELECT idx, title, memberId, readCnt, regDate FROM tbl_bbs";
+//		List<BbsDTO> listDto = new ArrayList<BbsDTO>();
+//		
+//		try {
+//			pstm = con.prepareStatement(sql);
+//			rs = pstm.executeQuery();
+//			
+//			while(rs.next()) {
+//				BbsDTO dto = new BbsDTO();
+//				
+//				dto.setIdx(rs.getInt("idx"));
+//				dto.setTitle(rs.getString("title"));
+//				dto.setMemberId(rs.getString("memberId"));
+//				dto.setReadCnt(rs.getInt("readCnt"));
+////				dto.setRegDate(timestamp.toLocalDateTime());
+//				
+//				listDto.add(dto);
+//				
+//			}
+//		}catch(Exception e) {
+//			System.out.println("==================================================");
+//			System.out.println("게시글리스트 조회 실패");
+//			System.out.println(e.getMessage());
+//			System.out.println("==================================================");
+//			
+//		}finally {
+//			
+//			close();
+//		}
+//		
+//		return listDto;
+//	}
 	
 	
 	// 특정 게시글 조회
@@ -73,15 +73,14 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	}
 	
 	// 게시글 등록
-	public int setBbsRegist(BbsDTO bbs) {
-		System.out.println("setBbsRegist실행");
+	public int setBbsRegist(BbsDTO dto) {
 		int result = 0;
 		String sql = "INSERT INTO tbl_bbs(title, content, memberId) VALUES(?, ?, ?)";
 		try {
 			pstm = con.prepareStatement(sql);
-			pstm.setString(1,bbs.getTitle());
-			pstm.setString(2,bbs.getContent());
-			pstm.setString(3,bbs.getMemberId());
+			pstm.setString(1,dto.getTitle());
+			pstm.setString(2,dto.getContent());
+			pstm.setString(3,dto.getMemberId());
 			
 			result = pstm.executeUpdate();
 			
@@ -101,14 +100,14 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	}
 	
 	// 게시글 수정
-	public int setBbsModify(BbsDTO bbs) {
-		int result =0;
+	public int setBbsModify(BbsDTO dto) {
+		int result = 0;
 		String sql = "UPDATE tbl_bbs SET title= ?, content =?, modifyDate = now() WHERE idx = ?";
 		try {
 			pstm=con.prepareStatement(sql);
-			pstm.setString(1,bbs.getTitle());
-			pstm.setString(2,bbs.getContent());
-			pstm.setInt(3,bbs.getIdx());
+			pstm.setString(1,dto.getTitle());
+			pstm.setString(2,dto.getContent());
+			pstm.setInt(3,dto.getIdx());
 			
 			//오류확인
 //			System.out.println("제목: " + bbs.getTitle());
@@ -159,10 +158,92 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	        
 	    } catch(Exception e) {
 	        System.out.println("삭제 실패 : " + e.getMessage());
-	    } finally {
-	        close();
 	    }
 	    return result;
 	}
+	
+	// 페이징+전체게시글조회
+//	public BbsDTO getBbsList(int pageNo, int pageSize, String searchFiled[], String[] searcgWord, String[] sortField, String[] sortOrder) {
+	
+	public List<BbsDTO> getBbsList(int pageNo, int pageSize, String searchType, String searchKeyword){
+//		System.out.println("getBbsList()시작");
+	List<BbsDTO> bbsList = new ArrayList<>();
+
+	String sql = "";
+	
+    if (searchType != null && !searchType.isEmpty() && searchKeyword != null && !searchKeyword.isEmpty()) {
+        if ("title".equals(searchType)) {
+            sql = "SELECT * FROM tbl_bbs WHERE title LIKE ? LIMIT ? OFFSET ?";
+        } else if ("memberId".equals(searchType)) {
+            sql = "SELECT * FROM tbl_bbs WHERE memberId LIKE ? LIMIT ? OFFSET ?";
+        }
+    } else {
+        sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs LIMIT ? OFFSET ?";
+    }
+		try {
+			pstm = con.prepareStatement(sql);
+			
+			int offset = (pageNo -1) * pageSize;
+			  if (searchType != null && !searchType.isEmpty() && searchKeyword != null && !searchKeyword.isEmpty()) {
+		            pstm.setString(1, "%" + searchKeyword + "%");
+		            pstm.setInt(2, pageSize);
+		            pstm.setInt(3, offset);
+		        } else {
+		            pstm.setInt(1, pageSize);
+		            pstm.setInt(2, offset);
+		        }
+			 
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				BbsDTO dto = new BbsDTO();
+				dto.setIdx(rs.getInt("idx"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setMemberId(rs.getString("memberId"));
+				dto.setRegDate(rs.getTimestamp("regDate").toLocalDateTime());
+				dto.setModifyDate(rs.getTimestamp("modifyDate").toLocalDateTime());
+				dto.setReadCnt(rs.getInt("readCnt"));
+				
+				bbsList.add(dto);
+			}
+			
+		}catch(Exception e) {
+			System.out.println("페이징 확인 불가 : " + e.getMessage());
+			
+		}
+//		System.out.println("getBbsList 호출, pageNo: " + pageNo + ", pageSize: " + pageSize);
+		
+		return bbsList;
+	}
+	
+	public int getTotalPageCnt(String searchType, String searchKeyword) {
+//		System.out.println("getTotalPageCnt()시작");
+		int total = 0;
+		String sql="";
+
+        if (searchType != null && !searchType.isEmpty() && searchKeyword != null && !searchKeyword.isEmpty()) {
+            sql = "SELECT COUNT(*) FROM tbl_bbs WHERE " + searchType + " LIKE ?";
+        } else {
+            sql = "SELECT COUNT(*) FROM tbl_bbs";
+        }
+		try {
+			pstm = con.prepareStatement(sql);
+			if (searchType != null && !searchType.isEmpty() && searchKeyword != null && !searchKeyword.isEmpty()) {
+                pstm.setString(1, "%" + searchKeyword + "%");
+            }
+            rs = pstm.executeQuery();
+            if (rs.next()) {
+            	total = rs.getInt(1);
+            	System.out.println(total);
+
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("getTotalPageCnt 오류 : " + e.getMessage());
+		}
+//		System.out.println("총 게시물 수 total : " + total);
+		return total;
+	}
+
 
 }

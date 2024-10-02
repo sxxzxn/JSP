@@ -16,6 +16,7 @@ public class MemberVO {
 		private LocalDateTime regDate;
 		private LocalDateTime leaveDate;
 		private LocalDateTime pwdChangeDate;
+		private String role;
 		
 		
 		
@@ -96,6 +97,12 @@ public class MemberVO {
 		}
 		public void setPwdChangeDate(LocalDateTime pwdChangeDate) {
 			this.pwdChangeDate = pwdChangeDate;
+		}
+		public String getRole() {
+			return role;
+		}
+		public void setRole(String role) {
+			this.role = role;
 		}
 	}
 	
