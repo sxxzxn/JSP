@@ -1,0 +1,69 @@
+@charset "UTF-8";
+.navbar {
+  height: 60px;
+  background: rgba(245, 244, 239);
+}
+
+.logo {
+  margin-left: 30px;
+  line-height: 60px;
+  float: left;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  font-style: bold;
+  font-size: 13px;
+}
+
+.navbar ul {
+  float: right;
+}
+
+.navbar li {
+  list-style-type: none;
+  float: left;
+  margin-right: 30px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+  font-style: bold;
+  font-size: 13px;
+}
+
+
+#topMenu li {
+  float: left;
+  position: relative;
+  white-space: nowrap;
+}
+
+#topMenu ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#topMenu li:hover ul {
+  display: block;
+  z-index:10;  /* 슬라이드 쇼에 가리지 않게 조절 */ 
+}
+
+#topMenu ul li {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#topMenu ul li a {
+  color: #000;
+  text-decoration: none;
+}

@@ -71,12 +71,12 @@ public class DBConnPool {
 			if( con != null) con.close();
 			
 			System.out.println("==================================================");
-			System.out.println("JDBC 자원해제 ");
+			System.out.println("DB 커넥션 풀 자원해제 ");
 			System.out.println("==================================================");
 		
 		}catch(Exception e) {
 			System.out.println("==================================================");
-			System.out.println("JDBC 오류 : "+e.getMessage());
+			System.out.println("DB 커넥션 풀 오류 : "+e.getMessage());
 			System.out.println("==================================================");
 		}
 	}

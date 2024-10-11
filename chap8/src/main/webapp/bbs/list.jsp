@@ -201,10 +201,12 @@ table, thead, tbody, tr, td {
                             out.print("&gt;&gt;");
                         }
                     }
-                    System.out.println("pageNo: " + pageNo);
-                    System.out.println("pageSize: " + pageSize);
-                    System.out.println("totalPost: " + totalPost);
-                    System.out.println("totalPages: " + totalPages);
+//                     System.out.println("===list.jsp에서 오류확인====");
+//                     System.out.println("pageNo: " + pageNo);
+//                     System.out.println("pageSize: " + pageSize);
+//                     System.out.println("totalPost: " + totalPost);
+//                     System.out.println("totalPages: " + totalPages);
+//                     System.out.println("===list.jsp에서 오류끝====");
                    dao.close();
                     %>
                     

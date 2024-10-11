@@ -48,6 +48,8 @@
 int idx = Integer.parseInt(request.getParameter("idx"));
 
 BbsDAO dao = new BbsDAO();
+//조회수 증가 
+dao.increaseViews(idx);
 BbsDTO dto = dao.getBbsNo(idx);
 String memberId = (String) session.getAttribute("memberId");
 String role = (String) session.getAttribute("role");
@@ -72,6 +74,7 @@ String role = (String) session.getAttribute("role");
             <textarea name="content" rows="10" readonly><%= dto.getContent() %></textarea>
         </div>
         <div>
+        <input type="button" id ="btnBack" value="이전" />
       <%
      if(memberId != null &&  memberId.equals(dto.getMemberId())){
      %> 
@@ -88,7 +91,6 @@ String role = (String) session.getAttribute("role");
      }
      %>
      
-        <input type="button" id ="btnBack" value="이전" />
         </div>
     </form>
 </div>
@@ -113,10 +115,9 @@ btnModify.addEventListener("click", function(e){
 const btnBack = document.getElementById("btnBack");
 btnBack.addEventListener("click", function(e){
     e.preventDefault();
+    alert("버튼화ㅣㄱ인");
 
-    frm.action = "./list.jsp"; 
-    frm.method = "POST"; 
-    frm.submit();
+    window.location.href = "./list.jsp"; 
 });
 
 //삭제

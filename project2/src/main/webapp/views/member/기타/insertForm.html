@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+<title>Insert title here</title>
+</head>
+<body>
+<h1>회원가입 양식</h1>
+<form action="insert.jsp" method="get" autocomplete="off" >
+	<label for="uid">아이디 : </label>
+	<input id="uid" type="text" name="uid" size="40" value="1234" maxlength="8"/><br/>
+	비번 : <input type="password" name="pwd"/><br/>
+	확인비번 : <input type="password" name="pwd2"/><br/>
+	이름 : <input type="text" name="name"/><br/>
+	<label for="uid">전화번호: </label><input id="phone" type="tel" name="phone"/><br/>
+	<input type="submit" value="회원가입"/>
+	<input type="reset" value="초기화"/>
+	<input type="image" src="images/login.png" alt="로그인">
+</form>
+
+<a href="loginForm.jsp" >로그인</a>
+<script>
+	//submit 이벤트 발생시 값을 검증한다 
+	//검증 후 이상없으면 서버에 전송 
+	
+</script>
+</body>
+</html>

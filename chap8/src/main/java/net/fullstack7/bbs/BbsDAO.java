@@ -58,7 +58,6 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 				
 			}
 			
-			
 		}catch(Exception e) {
 			System.out.println("==================================================");
 			System.out.println("특정 게시글 조회 실패");
@@ -173,12 +172,12 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	
     if (searchType != null && !searchType.isEmpty() && searchKeyword != null && !searchKeyword.isEmpty()) {
         if ("title".equals(searchType)) {
-            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE title LIKE ? LIMIT ? OFFSET ?";
+            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE title LIKE ? ORDER BY idx desc LIMIT ? OFFSET ?";
         } else if ("memberId".equals(searchType)) {
-            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE memberId LIKE ? LIMIT ? OFFSET ?";
+            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE memberId LIKE ? ORDER BY idx desc LIMIT ? OFFSET ?";
         }
     } else {
-        sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs LIMIT ? OFFSET ?";
+        sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs ORDER BY idx desc LIMIT ? OFFSET ?";
     }
 		try {
 			pstm = con.prepareStatement(sql);
@@ -216,6 +215,7 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 		return bbsList;
 	}
 	
+	// 페이지수 확인
 	public int getTotalPageCnt(String searchType, String searchKeyword) {
 //		System.out.println("getTotalPageCnt()시작");
 		int total = 0;
@@ -243,6 +243,26 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 		}
 //		System.out.println("총 게시물 수 total : " + total);
 		return total;
+	}
+	
+	// 조회수 증가
+	public void increaseViews(int idx) {
+		String sql = "";
+		int result = 0;
+		try {
+			sql = "UPDATE tbl_bbs set readCnt = readCnt + 1 where idx = ?" ;
+			pstm = con.prepareStatement(sql);
+			
+			pstm.setInt(1, idx);
+			result = pstm.executeUpdate();
+				if(result > 0) {
+					System.out.println(idx + "번 게시글 조회수 +1");
+				}else {
+					System.err.println("증가 실패");
+				}
+		}catch(Exception e) {
+			e.printStackTrace();
+		} 
 	}
 
 
