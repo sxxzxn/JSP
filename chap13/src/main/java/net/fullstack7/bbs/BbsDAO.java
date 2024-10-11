@@ -55,15 +55,9 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 				dto.setMemberId(rs.getString("memberId"));
 				dto.setContent(rs.getString("content"));
 				dto.setIdx(idx);
-				
 			}
-			
-			
 		}catch(Exception e) {
-			System.out.println("==================================================");
-			System.out.println("특정 게시글 조회 실패");
-			System.out.println(e.getMessage());
-			System.out.println("==================================================");
+			System.out.println("특정 게시글 조회 실패 : " + e.getMessage());
 			
 		}finally {
 			close();
@@ -73,35 +67,39 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	}
 	
 	// 게시글 등록
+	// 추후 파일 테이블 분리해서 FileDTO 도 매개변수로 넣어야함
 	public int setBbsRegist(BbsDTO dto) {
-		int result = 0;
-		String sql = "INSERT INTO tbl_bbs(title, content, memberId) VALUES(?, ?, ?)";
+		int row = 0;
+		String sql = "INSERT INTO tbl_bbs(title, content, memberId, filePath, fileName, fileExt, fileSize, fileCategory) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1,dto.getTitle());
 			pstm.setString(2,dto.getContent());
 			pstm.setString(3,dto.getMemberId());
 			
-			result = pstm.executeUpdate();
+			pstm.setString(4,dto.getFilePath());
+			pstm.setString(5,dto.getFileName());
+			pstm.setString(6,dto.getFileExt());
+			pstm.setInt(7,dto.getFileSize());
+			pstm.setString(8,dto.getFileCategory());
 			
-			System.out.println("게시글 등록 성공 :"+result);
+			row = pstm.executeUpdate();
+			
+			System.out.println("게시글 등록 성공 :"+row);
 		}catch(Exception e) {
-			System.out.println("==================================================");
-			System.out.println("게시글 등록 실패");
-			System.out.println(e.getMessage());
-			System.out.println("==================================================");
+			System.out.println(" 게시글 등록 실패 "+e.getMessage());
 			
 		}finally {
 			
 			close();
 		}
 	
-		return result;
+		return row;
 	}
 	
 	// 게시글 수정
 	public int setBbsModify(BbsDTO dto) {
-		int result = 0;
+		int row = 0;
 		String sql = "UPDATE tbl_bbs SET title= ?, content =?, modifyDate = now() WHERE idx = ?";
 		try {
 			pstm=con.prepareStatement(sql);
@@ -115,24 +113,24 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 //			System.out.println("인덱스: " + bbs.getIdx());
 //			System.out.println("SQL 쿼리: " + sql);
 			
-			result = pstm.executeUpdate();
+			row = pstm.executeUpdate();
 		}catch(Exception e) {
 			System.out.println("게시글 수정 실패 : " +e.getMessage());
 		}finally {
 			close();
 		}
-		return result;
+		return row;
 	}
 	
 	// 게시글 삭제
 	public int setBbsDelete(int idx) {
-		int result = 0; 
+		int row = 0; 
 		String sql = "DELETE FROM tbl_bbs where idx =?";
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			
-			result = pstm.executeUpdate();
+			row = pstm.executeUpdate();
 			
 			
 		}catch(Exception e) {
@@ -140,12 +138,12 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 		}finally {
 			close();
 		}
-		return result;
+		return row;
 	}
 	
 	// 다중삭제
 	public int setBbsDeletes(int[] idxs) {
-	    int result = 0; 
+	    int row = 0; 
 	    String sql = "DELETE FROM tbl_bbs WHERE idx = ?";
 	    try {
 	        pstm = con.prepareStatement(sql);
@@ -153,13 +151,13 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	        // 각각의 idx에 대해 삭제 실행
 	        for (int idx : idxs) {
 	            pstm.setInt(1, idx);
-	            result += pstm.executeUpdate();
+	            row += pstm.executeUpdate();
 	        }
 	        
 	    } catch(Exception e) {
 	        System.out.println("삭제 실패 : " + e.getMessage());
 	    }
-	    return result;
+	    return row;
 	}
 	
 	// 페이징+전체게시글조회
@@ -173,12 +171,12 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	
     if (searchType != null && !searchType.isEmpty() && searchKeyword != null && !searchKeyword.isEmpty()) {
         if ("title".equals(searchType)) {
-            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE title LIKE ? LIMIT ? OFFSET ?";
+            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE title LIKE ? ORDER BY idx desc LIMIT ? OFFSET ?";
         } else if ("memberId".equals(searchType)) {
-            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE memberId LIKE ? LIMIT ? OFFSET ?";
+            sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs WHERE memberId LIKE ? ORDER BY idx desc LIMIT ? OFFSET ?";
         }
     } else {
-        sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs LIMIT ? OFFSET ?";
+        sql = "SELECT idx, title, content, memberId, regDate, modifyDate, readCnt FROM tbl_bbs ORDER BY idx desc LIMIT ? OFFSET ?";
     }
 		try {
 			pstm = con.prepareStatement(sql);
@@ -234,7 +232,7 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
             rs = pstm.executeQuery();
             if (rs.next()) {
             	total = rs.getInt(1);
-            	System.out.println(total);
+//            	System.out.println("BbsDAO.java getTotalPageCnt : " + total);
 
 			}
 		}catch(Exception e) {
@@ -244,6 +242,25 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 //		System.out.println("총 게시물 수 total : " + total);
 		return total;
 	}
-
+	
+	// 조회수 증가
+		public void increaseViews(int idx) {
+			String sql = "";
+			int row = 0;
+			try {
+				sql = "UPDATE tbl_bbs set readCnt = readCnt + 1 where idx = ?" ;
+				pstm = con.prepareStatement(sql);
+				
+				pstm.setInt(1, idx);
+				row = pstm.executeUpdate();
+					if(row > 0) {
+						System.out.println(idx + "번 게시글 조회수 +1");
+					}else {
+						System.err.println("증가 실패");
+					}
+			}catch(Exception e) {
+				e.printStackTrace();
+			} 
+		}
 
 }

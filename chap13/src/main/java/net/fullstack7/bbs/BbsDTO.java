@@ -18,7 +18,8 @@ public class BbsDTO {
 	private String fileName;
 	private String fileExt;
 	private int fileSize;
-	
+	private String fileCategory;
+
 	// 기본생성자
 	public BbsDTO(){
 	}
@@ -124,5 +125,13 @@ public class BbsDTO {
 	public void setFileSize(int fileSize) {
 		this.fileSize = fileSize;
 	}
+	public String getFileCategory() {
+		return fileCategory;
+	}
+
+	public void setFileCategory(String fileCategory) {
+		this.fileCategory = fileCategory;
+	}
+
 
 }

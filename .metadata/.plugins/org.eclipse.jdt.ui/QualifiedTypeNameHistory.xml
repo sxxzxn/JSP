@@ -26,7 +26,6 @@
     <fullyQualifiedTypeName name="net.fullstack7.member.MemberDTO"/>
     <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="jakarta.servlet.ServletContext"/>
-    <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="project.dao.MemberDAO"/>
     <fullyQualifiedTypeName name="project.dto.Member"/>
     <fullyQualifiedTypeName name="javax.sql.rowset.serial.SerialException"/>
@@ -40,4 +39,7 @@
     <fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
     <fullyQualifiedTypeName name="java.lang.Exception"/>
+    <fullyQualifiedTypeName name="net.fullstack7.common.CommonFileUtil"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
 </qualifiedTypeNameHistroy>

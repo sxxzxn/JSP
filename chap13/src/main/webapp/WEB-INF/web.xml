@@ -30,12 +30,12 @@
   </context-param>
   <servlet>
     <description></description>
-    <display-name>BbsRegistOk</display-name>
-    <servlet-name>BbsRegistOk</servlet-name>
-    <servlet-class>net.fullstack7.bbs.BbsRegistOk</servlet-class>
+    <display-name>BbsRegist</display-name>
+    <servlet-name>BbsRegist</servlet-name>
+    <servlet-class>net.fullstack7.bbs.BbsRegist</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>BbsRegistOk</servlet-name>
-    <url-pattern>/BbsRegistOk</url-pattern>
+    <servlet-name>BbsRegist</servlet-name>
+    <url-pattern>/BbsRegist.do</url-pattern>
   </servlet-mapping>
 </web-app>

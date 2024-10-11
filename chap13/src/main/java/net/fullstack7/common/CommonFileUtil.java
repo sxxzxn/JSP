@@ -8,26 +8,28 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
-public class CommonFileuUtil {
-	public CommonFileuUtil() {}
+public class CommonFileUtil {
+	public CommonFileUtil() {}
 	
 	// 파일 업로드
-	public static String UploadFile(HttpServletRequest req, String saveDir , String inFileTagName)
+	public static String fileUpload(HttpServletRequest req, String saveDir , String inFileTagName)
 	throws ServletException, IOException{
 		System.out.println("=========================================");
 		System.out.println(" CommonFileuUtil >>> UploadFile Start ");
 		
 		// part 객체를 사용
-		Part part = req.getPart("inFileTagName");
+		Part part = req.getPart(inFileTagName);
 		
 		// 헤더값에서 파일 객체 부분 읽어 오기
-		String partHeader = part.getHeader("content-dispostion");
+		String partHeader = part.getHeader("content-disposition");
 		// 파일 객체 부분 : from-data;name="attchFile"; filename="파일명"
 		System.out.println("partHeader : "+ partHeader);
 		String [] arrPartHeader = partHeader.split("filename=");
@@ -37,7 +39,7 @@ public class CommonFileuUtil {
 			System.out.println("orgFileName : " + orgFileName);
 			
 			//파일을 업로드하는 경로
-			//D:\java7\JSP\chap13\src\main\webapp\Uplodes
+			//D:\java7\JSP\chap13\src\main\webapp\Uploads
 			part.write(saveDir + File.separator +orgFileName);
 		}
 		
@@ -47,7 +49,12 @@ public class CommonFileuUtil {
 	}
 	
 	// 업로드된 파일명 변경
-	public static String fileRename(String saveDir, String fileName) {
+	public static Map<String, String> fileRename(String saveDir, String fileName) {
+		if ( saveDir == null || saveDir.isEmpty() || fileName == null || fileName.isEmpty()) {
+			return null;
+		}
+		System.out.println("=========================================");
+		System.out.println(" CommonFileuUtil >>> fileRename Start ");
 		// 파일 확장자 추출
 		String fileExt = fileName.substring(fileName.lastIndexOf("."));
 		
@@ -62,19 +69,37 @@ public class CommonFileuUtil {
 		File newFile = new File(saveDir + File.separator + newFileName);
 		oldFile.renameTo(newFile);
 		
-		return newFileName;
+		Map<String, String> fmap = new HashMap<String, String>();
+		fmap.put("filePath", saveDir);
+		fmap.put("orgFileName", fileName);
+		fmap.put("newFileName", newFileName);
+		fmap.put("fileExt", fileExt);
+		fmap.put("fileSize", String.valueOf(oldFile.length()));
+		
+		
+		
+		
+		System.out.println(" saveDir : " + saveDir);
+		System.out.println(" orgFileName : " + fileName);
+		System.out.println(" newFileNam : " + newFileName);
+		System.out.println(" fileExt : " + fileExt);
+		System.out.println(" fileSize : " + String.valueOf(oldFile.length()));
+		System.out.println(" CommonFileuUtil >>> fileRename End ");
+		System.out.println("=========================================");
+		
+		return fmap;
 	}
 	
 	// 파일 다운로드
 	
 	public static void fileDownload(HttpServletRequest req, HttpServletResponse res, String dir , String orgFileName, String outFileName) {
-		//dir : D:\java7\JSP\chap13\src\main\webapp\Uplodes
+		//dir : D:\java7\JSP\chap13\src\main\webapp\Uploads
 		//dit : Uploads
 		
 		String realPath = req.getServletContext().getRealPath(dir);
 		try {
 			File file = new File(realPath, orgFileName);
-			InputStream is = new FileInputStream(file);
+			InputStream inputStream = new FileInputStream(file);
 			
 			// 클라이언트의 브라우저 체크
 			String userAgent = req.getHeader("User-Agent");
@@ -98,22 +123,47 @@ public class CommonFileuUtil {
 			// 출력 트림에 fail 내용 출력 
 			byte b [] = new byte[(int)file.length()];
 			int readBuffer = 0;
-			while( (readBuffer = is.read(b)) > 0 ) {
+			while( (readBuffer = inputStream.read(b)) > 0 ) {
 				outStream.write(b, 0, readBuffer);
 			}
 			
-		}catch (FileNotFoundException fileE) {
+			// 입출력 스트립 닫기
+			inputStream.close();
+			outStream.close();
 			
+		}catch (FileNotFoundException e) {
+			System.out.println("파일 미확인 : " + e.getMessage());
+			e.printStackTrace();
 		}
-		
 		catch (Exception e) {
+			System.out.println("예외 발생 : " + 
+		e.getMessage());
+			e.printStackTrace();
 			
 		}
-		 
-		
-		
-		
-		
 	}
-
+	
+	
+	// 파일 삭제
+	public static void fileDelete(HttpServletRequest req, String dir, String fileName) {
+		System.out.println("=========================================");
+		System.out.println(" CommonFileuUtil >>> fileDelete Start ");
+		File file = new File(dir + File.separator + fileName);
+		try {
+			// 파일이 존재할 경우 삭제
+			if( file.exists() ) {
+				file.delete();
+				System.out.println(dir + File.separator + fileName);
+			}
+			
+		}catch(Exception e) { 
+			System.out.println("파일 삭제 관련 오류 : " + e.getMessage());
+			System.out.println(dir + File.separator + fileName);
+			e.printStackTrace();
+			
+		}
+		
+		System.out.println(" CommonFileuUtil >>> fileDelete End ");
+		System.out.println("=========================================");
+	}
 }

@@ -100,7 +100,7 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	
 	// 게시글 수정
 	public int setBbsModify(BbsDTO dto) {
-		int result = 0;
+		int row = 0;
 		String sql = "UPDATE tbl_bbs SET title= ?, content =?, modifyDate = now() WHERE idx = ?";
 		try {
 			pstm=con.prepareStatement(sql);
@@ -114,24 +114,24 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 //			System.out.println("인덱스: " + bbs.getIdx());
 //			System.out.println("SQL 쿼리: " + sql);
 			
-			result = pstm.executeUpdate();
+			row = pstm.executeUpdate();
 		}catch(Exception e) {
 			System.out.println("게시글 수정 실패 : " +e.getMessage());
 		}finally {
 			close();
 		}
-		return result;
+		return row;
 	}
 	
 	// 게시글 삭제
 	public int setBbsDelete(int idx) {
-		int result = 0; 
+		int row = 0; 
 		String sql = "DELETE FROM tbl_bbs where idx =?";
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setInt(1, idx);
 			
-			result = pstm.executeUpdate();
+			row = pstm.executeUpdate();
 			
 			
 		}catch(Exception e) {
@@ -139,12 +139,12 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 		}finally {
 			close();
 		}
-		return result;
+		return row;
 	}
 	
 	// 다중삭제
 	public int setBbsDeletes(int[] idxs) {
-	    int result = 0; 
+	    int row = 0; 
 	    String sql = "DELETE FROM tbl_bbs WHERE idx = ?";
 	    try {
 	        pstm = con.prepareStatement(sql);
@@ -152,13 +152,13 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	        // 각각의 idx에 대해 삭제 실행
 	        for (int idx : idxs) {
 	            pstm.setInt(1, idx);
-	            result += pstm.executeUpdate();
+	            row += pstm.executeUpdate();
 	        }
 	        
 	    } catch(Exception e) {
 	        System.out.println("삭제 실패 : " + e.getMessage());
 	    }
-	    return result;
+	    return row;
 	}
 	
 	// 페이징+전체게시글조회
@@ -248,14 +248,14 @@ public class BbsDAO extends net.fullstack7.common.DBConnPool{
 	// 조회수 증가
 	public void increaseViews(int idx) {
 		String sql = "";
-		int result = 0;
+		int row = 0;
 		try {
 			sql = "UPDATE tbl_bbs set readCnt = readCnt + 1 where idx = ?" ;
 			pstm = con.prepareStatement(sql);
 			
 			pstm.setInt(1, idx);
-			result = pstm.executeUpdate();
-				if(result > 0) {
+			row = pstm.executeUpdate();
+				if(row > 0) {
 					System.out.println(idx + "번 게시글 조회수 +1");
 				}else {
 					System.err.println("증가 실패");
