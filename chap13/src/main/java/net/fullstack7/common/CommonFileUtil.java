@@ -7,8 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import jakarta.servlet.ServletException;
@@ -18,6 +21,45 @@ import jakarta.servlet.http.Part;
 
 public class CommonFileUtil {
 	public CommonFileUtil() {}
+	
+	// 다중파일 업로드 
+	public static List<String> multiFileUpload(HttpServletRequest req, String saveDir , String inFileTagName)
+			throws ServletException, IOException{
+				System.out.println("=========================================");
+				System.out.println(" CommonFileuUtil >>> multiFileUpload Start ");
+				
+				// 파일명 처리 리스트
+				List<String> fileNameList = new ArrayList<String>();
+				
+				// part 객체 --> 여러개 처리 
+				Collection<Part> partList = req.getParts();
+				// partList만큼 돌면서 처리
+				for(Part part : partList) {
+					
+					// 헤더값에서 파일 객체 부분 읽어 오기
+					String partHeader = part.getHeader("content-disposition");
+					// 파일 객체 부분 : from-data;name="attchFile"; filename="파일명"
+					System.out.println("partList >> part >> partHeader : "+ partHeader);
+					String [] arrPartHeader = partHeader.split("filename=");
+					String orgFileName = arrPartHeader[1].trim().replace("\"","");
+					
+					if(! orgFileName.isEmpty() ) {
+						System.out.println("orgFileName : " + orgFileName);
+						
+						//파일을 업로드하는 경로
+						//D:\java7\JSP\chap13\src\main\webapp\Uploads
+						part.write(saveDir + File.separator +orgFileName);
+						
+						fileNameList.add(orgFileName);
+					}		
+				}
+			
+				
+				System.out.println(" CommonFileuUtil >>> multiFileUpload End ");
+				System.out.println("=========================================");
+				return fileNameList;
+			}
+	
 	
 	// 파일 업로드
 	public static String fileUpload(HttpServletRequest req, String saveDir , String inFileTagName)
