@@ -35,6 +35,9 @@ public class CommonFileUtil {
 				Collection<Part> partList = req.getParts();
 				// partList만큼 돌면서 처리
 				for(Part part : partList) {
+					if(! part.getName().equals(inFileTagName)) {
+						continue;
+					}
 					
 					// 헤더값에서 파일 객체 부분 읽어 오기
 					String partHeader = part.getHeader("content-disposition");
