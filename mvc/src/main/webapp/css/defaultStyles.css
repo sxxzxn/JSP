@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+ .navbar {
+        display: flex;
+        justify-content: flex-end; /* 오른쪽 정렬 */
+        background-color: f4f4f4; /* 원하는 배경색 */
+        padding: 10px;
+    }
+    
+    .navbar li {
+        list-style: none;
+        margin-left: 20px;
+    }
+    
+    .navbar a {
+        text-decoration: none;
+        color: #000; /* 링크 색상 */
+        padding: 8px 16px;
+    }
