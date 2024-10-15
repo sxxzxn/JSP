@@ -10,7 +10,7 @@
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
   <session-config>
-    <session-timeout>1</session-timeout>
+    <session-timeout>10</session-timeout>
   </session-config>
   <context-param>
     <param-name>MariaDriver</param-name>
@@ -28,7 +28,6 @@
     <param-name>dbPwd</param-name>
     <param-value>1234</param-value>
   </context-param>
-
   <servlet>
     <description></description>
     <servlet-name>BbsRegistController</servlet-name>
@@ -37,6 +36,6 @@
   <servlet-mapping>
     <servlet-name>BbsRegistController</servlet-name>
     <url-pattern>/bbs/regist.do</url-pattern>
-<!--     /웹에서 표현되는 url, webapp 기준 -->
   </servlet-mapping>
+
 </web-app>

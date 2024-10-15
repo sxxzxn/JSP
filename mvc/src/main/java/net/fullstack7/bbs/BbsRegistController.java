@@ -21,7 +21,7 @@ public class BbsRegistController extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		req.getRequestDispatcher("./bbs/regist.jsp").forward(req, res);
+		req.getRequestDispatcher("regist.jsp").forward(req, res);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -76,13 +76,13 @@ public class BbsRegistController extends HttpServlet {
 		int row = dao.registBbs(dto);
 		
 		if(row>0) {
-			res.sendRedirect("/mvc//bbs/list.do");
+			res.sendRedirect("/mvc/bbs/list.do");
 		}else {
 			CommonFileUtil.fileDelete(req, saveDir, orgFileName);
 			CommonFileUtil.fileDelete(req, saveDir, fmap.get("newFileName"));
 			
 			req.setAttribute("errMsg", "게시글 등록시 에러 발생");
-			req.getRequestDispatcher("./bbs/regist.jsp").forward(req, res);
+			req.getRequestDispatcher("/regist.jsp").forward(req, res);
 			
 		}
 		dao.close();

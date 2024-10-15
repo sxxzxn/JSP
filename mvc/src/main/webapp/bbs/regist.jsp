@@ -8,27 +8,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<link rel="stylesheet" href="../css/bbsStyles.css">
 </head>
 <body>
 <h2> 게시판 등록 페이지 </h2>
 
 
 
-<form name ="frmRegist" id="frmRegist" method="POST" action="./regist.do" enctype="multipart/form-data">
+<form name ="frmRegist" id="frmRegist" method="POST" enctype="multipart/form-data">
 	<table>
 		<tr>
 			<th>제목 : </th>
-			<td><input type="text" name="title" id="title" value="글제목" /></td>
+			<td><input type="text" name="title" id="title" value="" /></td>
 		</tr>
 		<tr>
 			<th>작성자 : </th>
-			<td><input type="text" name="memberid" id="memberid" value="user1" /></td>
+			<td><input type="text" name="memberid" id="memberid" value="" /></td>
 		</tr>
 		<tr>
 			<th>노출일 : </th>
-			<td><input type="date" name="displaydate" id="displaydate" value="2024-10-14" /></td>
+			<td><input type="date" name="displaydate" id="displaydate" value="" /></td>
 		</tr>
 		<tr>
 			<th>글내용 : </th>
@@ -46,13 +44,30 @@
 			<td><input type="file" name="file1" id="file1" /></td>
 		</tr>
 		<tr>
-			<td colapan="2">
-				<input type="submit" value="등록" />
+			<td colspan="2">
+				<input type="button" value="등록" onclick="goToRegistdo()" />
 			</td>
+<!-- 			<td colapan="2"> -->
+<!-- 				<input type="button" value="취소" onclick="goCancel()" /> -->
+<!-- 			</td> -->
 		</tr>
 	</table>
 </form>
+<script>
+    function goToRegistdo() {
+        const frm = document.getElementById('frmRegist');
+        frm.action = './regist.do';
+        frm.method = 'POST';  
+        frm.submit();
+    }
 
+//     function goCancel() {
+//         const frm = document.getElementById('frmRegist');
+//         frm.action = './list.do';
+//         frm.method = 'POST';  
+//         frm.submit();
+//     }
+</script>
 
 </body>
 </html>
