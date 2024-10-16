@@ -8,7 +8,7 @@ public class CommentDTO {
     private LocalDateTime regDate; // 댓글 작성일
     private int bbsIdx; // 댓글이 속한 게시판의 ID
     private String contents; // 댓글 내용
-    private String pId; // 댓글 내용
+    private int pId; // 댓글 내용
     
     
 	public int getCommentId() {
@@ -41,10 +41,10 @@ public class CommentDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getpId() {
+	public int getpId() {
 		return pId;
 	}
-	public void setpId(String pId) {
+	public void setpId(int pId) {
 		this.pId = pId;
 	}
 }

@@ -16,13 +16,14 @@
 
 <form name ="frmRegist" id="frmRegist" method="POST" enctype="multipart/form-data">
 	<table>
+		<input type="hidden" name="bbsIdx" value="${dto.idx}" />
 		<tr>
 			<th>제목 : </th>
 			<td><input type="text" name="title" id="title" value="" /></td>
 		</tr>
 		<tr>
 			<th>작성자 : </th>
-			<td><input type="text" name="memberid" id="memberid" value="" /></td>
+			<td><input type="text" name="memberid" id="memberid" value="admin"/></td>
 		</tr>
 		<tr>
 			<th>노출일 : </th>
@@ -41,7 +42,7 @@
 		</tr>
 		<tr>
 			<th>첨부파일 : </th>
-			<td><input type="file" name="file1" id="file1" /></td>
+			<td><input type="file" name="files" id="files"  multiple /></td>
 		</tr>
 		<tr>
 			<td colspan="2">
@@ -67,6 +68,7 @@
 //         frm.method = 'POST';  
 //         frm.submit();
 //     }
+
 </script>
 
 </body>

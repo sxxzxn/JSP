@@ -112,4 +112,7 @@ input[type="button"]:hover {
     color: #000; /* 링크 색상 */
     padding: 8px 16px;
 }
-
+.reply {
+        margin-left: 20px; /* 들여쓰기 */
+        color: #666;
+    }

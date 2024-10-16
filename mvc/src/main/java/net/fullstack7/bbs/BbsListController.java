@@ -38,6 +38,7 @@ public class BbsListController extends HttpServlet {
         req.setAttribute("searchKeyword", searchKeyword);
         
         req.getRequestDispatcher("list.jsp").forward(req, res);
+        dao.close();
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

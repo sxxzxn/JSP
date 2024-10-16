@@ -22,6 +22,8 @@ public class BbsModifyController extends HttpServlet {
 	    dto = dao.viewBbs(dto);
 	    req.setAttribute("dto", dto); 
 	    req.getRequestDispatcher("modify.jsp").forward(req, res);
+	    
+	    dao.close();
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

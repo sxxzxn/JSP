@@ -93,6 +93,7 @@ public class CommonFileUtil {
 		return orgFileName;
 	}
 	
+	
 	// 업로드된 파일명 변경
 	public static Map<String, String> fileRename(String saveDir, String fileName) {
 		if ( saveDir == null || saveDir.isEmpty() || fileName == null || fileName.isEmpty()) {

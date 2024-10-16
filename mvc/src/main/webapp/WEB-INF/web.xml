@@ -37,5 +37,32 @@
     <servlet-name>BbsRegistController</servlet-name>
     <url-pattern>/bbs/regist.do</url-pattern>
   </servlet-mapping>
-
+  <filter>
+    <display-name>LoginCheckFilter1</display-name>
+    <filter-name>LoginCheckFilter1</filter-name>
+    <filter-class>net.fullstack7.filters.LoginCheckFilter1</filter-class>
+    <init-param>
+      <description></description>
+      <param-name>FILTER_INIT_PARAM</param-name>
+      <param-value>필터 초기화 변수 1</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginCheckFilter1</filter-name>
+    <url-pattern>/LoginCheckFilter1</url-pattern>
+  </filter-mapping>
+<!--   <filter> -->
+<!--     <display-name>LoginCheckFilter2</display-name> -->
+<!--     <filter-name>LoginCheckFilter2</filter-name> -->
+<!--     <filter-class>net.fullstack7.filters.LoginCheckFilter2</filter-class> -->
+<!--     <init-param> -->
+<!--       <description></description> -->
+<!--       <param-name>FILTER_INIT_PARAM2</param-name> -->
+<!--       <param-value>초기화 매개 변수2</param-value> -->
+<!--     </init-param> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>LoginCheckFilter2</filter-name> -->
+<!--     <url-pattern>/LoginCheckFilter2</url-pattern> -->
+<!--   </filter-mapping> -->
 </web-app>

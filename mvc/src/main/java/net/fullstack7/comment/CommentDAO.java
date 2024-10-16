@@ -17,14 +17,21 @@ public class CommentDAO extends DBConnPool {
 			pstm.setString(1, dto.getWriterId());
 			pstm.setInt(2, dto.getBbsIdx());
 			pstm.setString(3, dto.getContents());
-			pstm.setString(4, dto.getpId());
+			pstm.setInt(4, dto.getpId());
+			
+			System.out.println("댓글등록 확인========");
+			System.out.println("SQL: " + pstm);
+	        System.out.println("Writer ID: " + dto.getWriterId());
+	        System.out.println("BBS Index: " + dto.getBbsIdx());
+	        System.out.println("Contents: " + dto.getContents());
+	        System.out.println("Parent ID: " + dto.getpId());
 			
 			row = pstm.executeUpdate();
 			
 			if( row > 0 ) {
-				System.out.println("글작성완료");
+				System.out.println("댓글글작성완료");
 			}else {
-				System.out.println("글작성실패"+dto.getWriterId());
+				System.out.println("댓글글작성실패"+dto.getWriterId());
 			}
 		}catch(Exception e) {
 			System.out.println("댓글 등록 중 예외 발생: " + e.getMessage());
@@ -100,13 +107,15 @@ public class CommentDAO extends DBConnPool {
                 dto.setWriterId(rs.getString("writerId"));
                 dto.setRegDate(rs.getTimestamp("regDate").toLocalDateTime());
                 dto.setContents(rs.getString("contents"));
-                dto.setpId(rs.getString("pId"));
+                dto.setpId(rs.getInt("pId"));
                 dto.setBbsIdx(rs.getInt("bbsIdx"));
                 
                 commentList.add(dto);
             }
             System.out.println("bbsIdx: " + bbsIdx);
             System.out.println("Executing query: " + sql);
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
             e.getMessage();

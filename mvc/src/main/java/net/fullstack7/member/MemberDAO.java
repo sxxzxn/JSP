@@ -1,8 +1,17 @@
 package net.fullstack7.member;
 
 import net.fullstack7.common.DBConnPool;
+import net.fullstack7.utils.CommonDateUtil;
 
 public class MemberDAO extends DBConnPool {
+	
+	private CommonDateUtil dateUtil;
+
+	public MemberDAO() {
+		super();
+		dateUtil = new CommonDateUtil();
+
+	}
 	
 	// 로그인
 	//1. 메서드 작성
@@ -38,6 +47,43 @@ public class MemberDAO extends DBConnPool {
 	    // 7. DTO( 메서드 매개변수 ) 반환
 	    return dto;
 	}
+	
+	
+//  로그인 추후 수정하기
+//	public MemberDTO getMemberInfo(String user_id, String pwd) {
+//		MemberDTO dto = new MemberDTO();
+//		String sql = "SELECT memberId, name, pwd, regDate FROM tbl_member WHERE memberId = ?";
+//
+//		// 아이디/비밀번호 체크 플래그
+//		boolean check_id_flag = false;
+//		boolean check_pwd_flag = false;
+//		
+//		
+//		try {
+//			pstm = con.prepareStatement(sql);
+//			pstm.setString(1, user_id);
+//			rs = pstm.executeQuery();
+//			if ( rs.next() ) {
+//				check_id_flag = true;
+//				
+//				if ( pwd.equals(rs.getString("pwd")) ) {
+//					check_pwd_flag = true;
+//				}
+//
+//				if ( check_id_flag && check_pwd_flag ) {
+//					dto.setMemberId(user_id);
+//					dto.setPwd(pwd);
+//					dto.setName(rs.getString("name"));
+//					dto.setRegDate(dateUtil.toLocalDateTime(rs.getTimestamp("regDate")));
+//				} else {
+//					dto = null;
+//				}
+//			}
+//		} catch(Exception e) {
+//			
+//		}
+//		return null;
+//	}
 	
 //	// 개인 회원정보 수정
 //	public int memberModify(MemberDTO dto) {
